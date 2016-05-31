@@ -9,6 +9,26 @@ You can run your own isolate server, `dist_test` server, slave, beanstalkd, and 
 
 https://github.com/apache/incubator-kudu/blob/master/build-support/dist_test.py
 
+### Docker-based setup
+
+Build the Docker image:
+
+        $ docker build -t dist_test .
+
+Create a S3 bucket named "dist-test-bucket"
+
+Start a container with AWS credentials:
+
+        $ docker run -it -e AWS_ACCESS_KEY=foo -e AWS_SECRET_KEY=bar dist_test
+
+Start the master and one or more slaves in the container:
+
+        $ ./bin/server
+        $ ./bin/slave
+
+### Manual setup
+If you do not want to use Docker for setting up, you can set up the environment manually.
+
 The first step is to clone and build the required following additional repos we need.
 
 Luci is split into [luci-py](https://github.com/luci/luci-py) and [luci-go](https://github.com/luci/luci-go).
@@ -31,18 +51,15 @@ luci-py:
 
             Review URL: https://codereview.appspot.com/167150043
 
-luci-go:
+luci-go([todd's fork](https://github.com/toddlipcon/luci-go)):
 
-        commit ca2862b9255f9cf4e293bd399145a818ce8f04b7
-        Author: Andrii Shyshkalov <tandrii@chromium.org>
-        Date:   Mon Jun 1 15:38:57 2015 +0200
 
-            Fix TestArchiveAbsolutePaths on Windows.
-
-            R=maruel@chromium.org, todd@cloudera.com
-            BUG=
-
-            Review URL: https://codereview.chromium.org/1149753006
+        commit 6f8431521270754084d85b593604ff46f9ac51b1
+        Author: Todd Lipcon <todd@cloudera.com>
+        Date:   Fri Jul 1 16:50:17 2016 -0700
+        
+            Print errors to log
+    	
 
 Follow the luci-go README for installation instructions.
 This requires Go 1.4. 1.5 and higher will fail with an error about "use of internal package not allowed".

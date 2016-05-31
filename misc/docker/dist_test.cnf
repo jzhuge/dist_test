@@ -1,0 +1,23 @@
+[isolate]
+home=/luci-py
+server=http://localhost:4242
+cache_dir=/tmp/isolate-cache
+
+[aws]
+# you have to provide these environment variables:
+# - AWS_ACCESS_KEY
+# - AWS_SECRET_KEY
+test_result_bucket=dist-test-bucket
+
+[mysql]
+host=localhost
+user=root
+password=
+database=dist_test_db
+
+[beanstalk]
+host=localhost
+
+[dist_test]
+master=http://localhost:8081/
+allowed_ip_ranges=0.0.0.0/0
