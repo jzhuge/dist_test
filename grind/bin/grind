@@ -355,6 +355,10 @@ class TestRunner:
                             type=int,
                             default=default_timeout,
                             help="Per-task timeout. The default timeout is %s seconds." % default_timeout)
+        parser.add_argument('--java-version',
+                            type=int,
+                            default=8,
+                            help="Select Java version. The choices are 7 or 8. The default is 8.")
         # Util / debug
         parser.add_argument('--leak-temp',
                             action='store_true',
@@ -394,6 +398,7 @@ class TestRunner:
                                                 self.project_config.file_globs)
         i = isolate.Isolate(self.project_dir,
                             self.output_dir,
+                            java_version = self.args.java_version,
                             include_modules = self.args.include_modules,
                             exclude_modules = self.args.exclude_modules,
                             include_patterns = self.args.include_patterns,
